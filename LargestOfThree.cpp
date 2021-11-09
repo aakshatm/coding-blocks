@@ -1,19 +1,21 @@
-#include<iostream>
-using namespace std;
 
-int main() {
-    int a, b, c;
-    cin >> a;
-    cin >> b;
-    cin >> c;
-    if (a >= b && a >= c){
-        cout << a;
+
+#include <iostream>
+#include <climits>
+using namespace std;
+int main()
+{
+    int largest=INT_MIN;
+    int i=1,no;
+    while(i<=3)
+    {
+        cin>>no;
+        if(no>=largest)
+        {
+            largest=no;
+        }
+        i++;
     }
-    else if (b >= a && b >= c){
-        cout << b;
-    }
-    else {
-        cout << c;
-    }
+    cout << largest;
     return 0;
 }
