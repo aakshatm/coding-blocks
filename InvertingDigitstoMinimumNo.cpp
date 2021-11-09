@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-int evaluateLength(int n){
+int evaluateLength(long long int n){
     int length = 0;
     while (n > 0){
         n = n/10;
