@@ -1,52 +1,68 @@
 #include <iostream>
-#include <algorithm>
 #include <climits>
 using namespace std;
 
-
-void arrayInput(int a[], int n) {
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
+int maxNWSum(int a[], int n){
+	int maxSum = 0;
+	int curSum = 0;
+	for (int i = 0; i<n; i++){
+		curSum += a[i];
+		if (curSum > maxSum){
+			maxSum = curSum;
+		}
+		if (curSum < 0){
+			curSum = 0;
+		}
 	}
+	return maxSum;
 }
 
-int windowsum(int a[], int i, int j) {
-	int sum = 0;
-	for (int k = i; k <= j; k++) {
-		sum += a[k];
+
+// to find sum of wrapped elements just subtract the sum of remeaning elements from the total sum
+int maxWSum(int a[], int n){
+
+	// calc total
+	int total = 0;
+	for (int i = 0; i<n; i++){
+		total += a[i];
+		// invert the sign 
+		a[i] = -a[i];
 	}
-	return sum;
-}
 
-int maxSumOfConsecutiveNums(int a[], int n) {
-	// sorting the array in ascending order
-	sort(a, a + n);
+	int maxSum = 0;
+	int curSum = 0;
 
-	// using sliding window: window will expand and srink and move to right
-	int i = 0, j = 0;
-
-	// Intializing the Max Sum
-	int maxSum = INT_MIN;
-
-	for (int i = 0; i < n; i++) {
-		for (int j = i; j < n; j++) {
-			int windowSum = windowsum(a, i, j);
-			maxSum = max(maxSum, windowSum);
+	for (int i = 0; i<n; i++){
+		curSum += a[i];
+		if (curSum < 0){
+			curSum = 0;
+		}
+		if ((total + curSum) > maxSum){
+			maxSum = total + curSum;
 		}
 	}
 
 	return maxSum;
 }
 
+int main()
+{
+	// finding maximum sum in all the non wrapping sub arrays
+	
+	int t;
+	cin >> t;
+	while (t--){
+		int n;
+		cin >> n; 
+		int a[n];
+		for (int i = 0; i<n; i++){
+			cin >> a[i];
+		}
 
-int main() {
-	int n;
-	cin >> n;
+		int maxNonWrappedSum = maxNWSum(a, n);
+		int maxWrappedSum = maxWSum(a, n);
 
-	int a[100];
-	arrayInput(a, n);
-
-	cout << maxSumOfConsecutiveNums(a, n);
-
+		cout << max(maxNonWrappedSum, maxWrappedSum) << endl;
+	}
 	return 0;
 }
