@@ -1,9 +1,9 @@
 #include <iostream>
 using namespace std;
 
-int sumOfDigits(int n){
+int sumOfDigits(int n) {
     int sum = 0;
-    while (n > 0){
+    while (n > 0) {
         int digit;
         digit = n % 10;
         sum += digit;
@@ -12,22 +12,24 @@ int sumOfDigits(int n){
     return sum;
 }
 
-bool isprime(int n){
-    for (int i = 2; i<n; i++){
-        if (n % i == 0){
+bool isprime(int n) {
+    for (int i = 2; i < n; i++) {
+        if (n % i == 0) {
             return false;
         }
     }
     return true;
 }
 
-int sumOfPrimeFactors(int n){
-    int sum = 0;  
-    int potentialFactors = 2;  
-    while (n!=1){
-        while (n % potentialFactors == 0 && isprime(potentialFactors)){
-            sum += potentialFactors;
-            n = n/potentialFactors;
+
+
+int sumOfDigitsOfPrimeFactors(int n) {
+    int sum = 0;
+    int potentialFactors = 2;
+    while (n != 1) {
+        while (n % potentialFactors == 0 && isprime(potentialFactors)) {
+            sum += sumOfDigits(potentialFactors);
+            n = n / potentialFactors;
         }
         potentialFactors++;
     }
@@ -35,16 +37,16 @@ int sumOfPrimeFactors(int n){
 }
 
 int main()
-{   
+{
     unsigned int n;
     cin >> n;
-    if (sumOfDigits(n) == sumOfPrimeFactors(n)){
+    if (sumOfDigits(n) == sumOfPrimeFactors(n)) {
         cout << 1;
-    } 
-    else{
+    }
+    else {
         cout << 0;
     }
-    
-    
+
+
     return 0;
 }
