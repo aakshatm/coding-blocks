@@ -2,22 +2,64 @@
 #include <algorithm>
 using namespace std;
 
-void arrayInput(int a[], int n) {
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
-}
+// void arrayTripletSumPairs(int a[], int n, int target) {
+// 	int i = 0, k = 1, j = n - 1;
+// 	while (i < k and k < j) {
+// 		int sum = a[i] + a[k] + a[j];
+// 		if (sum > target) {
+// 			if ( k < (j - 1)) {
+// 				j--;
+// 			}
+// 			else if (i < (k - 1)) {
+// 				k--;
+// 			}
+// 			else if ((i - 1) > 0) {
+// 				i--;
+// 			}
+// 		}
 
-void targetSumPair(int a[], int n, int target) {
-	// using two nested for loops to get all pairs
-	for (int i = 0; i < n; i++) {
-		for (int j = i + 1; j < n; j++) {
-			for (int k = j + 1; k < n; k++) {
-				if (a[i] + a[j] + a[k] == target) {
-					int pairsarr[] = {a[i], a[j], a[k]};
-					sort(pairsarr, pairsarr + 3);
-					cout << pairsarr[0] << ", " << pairsarr[1] << " and " << pairsarr[2] << endl;
-				}
+// 		else if (sum < target) {
+// 			if ((k + 1) < j) {
+// 				k++;
+// 			}
+// 			else if ((j + 1) < n) {
+// 				j++;
+// 			}
+// 			else if ((i + 1) < k) {
+// 				i++;
+// 			}
+// 		}
+
+// 		else {
+// 			cout << a[i] << ", " << a[k] << " and " << a[j] << endl;
+// 			if ((k + 1) < j) {
+// 				k++;
+// 			}
+// 			else if ( (i + 1) < k) {
+// 				i++;
+// 			}
+// 			else {
+// 				j--;
+// 			}
+// 		}
+// 	}
+// }
+
+void arrayTripletSumPairs(int a[], int n, int target) {
+	for (int i = 0; i < n - 2; i++) {
+		int l = i + 1, r = n - 1;
+		while (l < r) {
+			int sum = a[i] + a[l] + a[r];
+			if (sum < target) {
+				l++;
+			}
+			else if (sum > target) {
+				r--;
+			}
+			else {
+				cout << a[i] << ", " << a[l] << " and " << a[r] << endl;
+				l++;
+				r--;
 			}
 		}
 	}
@@ -25,18 +67,18 @@ void targetSumPair(int a[], int n, int target) {
 
 
 int main() {
-	int n;
+	int n, target;
 	cin >> n;
 	int a[n];
-	// take array input
-	arrayInput(a, n);
-
-
-	// print target sum pair
-	int target;
+	for (int i = 0; i < n ; i++) {
+		cin >> a[i];
+	}
 	cin >> target;
-	targetSumPair(a, n, target);
+
+
+	sort(a, a + n);
+	arrayTripletSumPairs(a, n, target);
+
+
 	return 0;
 }
-
-

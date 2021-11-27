@@ -2,76 +2,52 @@
 #include <string>
 using namespace std;
 
-int calcPerfectness(string s) {
-	int perfectness = 0;
-	int i = 0;
-	int j = 0;
-	while (j < s.length()) {
-		int cur_perfectness = 0;
-		while (s[i] == s[j]) {
-			cur_perfectness++;
-			j++;
+int countMaxWindowsSize(string s, int k, char ch) {
+	int i = 0, j = 0;
+	int c = 0;
+
+	int ans = 0;
+	for (j = 0; j < s.length() - 1; j++) {
+		if (s[j] != ch) {
+			c++;
 		}
-		if (cur_perfectness > perfectness) {
-			perfectness = cur_perfectness;
-		}
-		i++;
-	}
-
-	return perfectness;
-
-}
-
-string swapString(string &s, int indx) {
-	if (s[indx] == 'a') {
-		s[indx] = 'b';
-	}
-	else {
-		s[indx] = 'a';
-	}
-	return s;
-
-}
-
-int main() {
-	int k;
-	cin >> k;
-	string s;
-	cin >> s;
-	// int max_perfectness  = 1;
-
-
-	int i = 0;
-	// while (i < s.length() && k) {
-	// 	string a = s;
-	// 	if (calcPerfectness(swapString(a, i)) > calcPerfectness(s)) {
-	// 		s = a;
-	// 		k--;
-	// 	}
-	// 	i++;
-	// }
-	bool visited[s.length()] = {0};
-
-	int len = s.length();
-	while (true) {
-		if (k > 0) {
-			for (int i = 0; i < len; i++) {
-				string a = s;
-				if ((calcPerfectness(swapString(a, i)) > calcPerfectness(s) ) and !visited[i]) {
-					visited[i] = true;
-					s = a;
-					k--;
-				}
-			}
-		}
-		else {
+		if (c == k) {
 			break;
 		}
 	}
 
+	while (i < j) {
+		while (j < s.length() - 1  && s[j + 1] == ch) {
+			j++;
+		}
+
+		int curlength = j - i + 1;
+		ans = max(ans, curlength);
+
+		i++;
+
+		if (j < s.length() - 1 && s[i - 1] != ch) {
+			j++;
+		}
+	}
+
+	return ans;
 
 
-	cout << s;
+}
+
+int main() {
+	// driver code
+	int k;
+	cin >> k;
+
+	string s;
+	cin >> s;
+
+	int maxforA = countMaxWindowsSize(s, k, 'a');
+	int maxforB = countMaxWindowsSize(s, k, 'b');
+
+	cout << max(maxforA, maxforB);
 
 	return 0;
 }
